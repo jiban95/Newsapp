@@ -57,6 +57,7 @@ class NewsListFragment : Fragment() {
             newsListViewModel.newsList.collect {
                 if (it.isLoading) {
                     _binding!!.progressBar.display
+
                 }
 
                 if (it.data != null) {
