@@ -65,7 +65,7 @@ class NewsListFragment : Fragment() {
                     _binding!!.horizontalRecycler.adapter = newsHeadingAdapter
                     _binding!!.verticalRecycler.adapter = newsVerticalAdapter
                 }
-               // _binding!!.progressBar.visibility= View.GONE
+               _binding!!.progressBar.visibility= View.GONE
             }
         }
     }
