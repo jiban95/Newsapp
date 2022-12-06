@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,7 +21,6 @@ class NewsListViewModel @Inject constructor(private val newsListUseCase: NewsLis
     val newsList: StateFlow<NewsListState> = _newsList
 
     fun getNewsData() {
-
         newsListUseCase().onEach {
             when (it) {
                 is Resource.Loading -> {

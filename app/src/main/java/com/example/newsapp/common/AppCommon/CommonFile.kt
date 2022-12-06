@@ -1,7 +1,11 @@
 package com.example.newsapp.common.AppCommon
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Color
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.view.Gravity
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -12,52 +16,31 @@ import androidx.appcompat.app.AlertDialog
 
 class CommonFile {
     companion object CommonMethod {
-        fun setProgressDialog(context: Context, message: String): AlertDialog {
-            val llPadding = 30
-            val ll = LinearLayout(context)
-            ll.orientation = LinearLayout.HORIZONTAL
-            ll.setPadding(llPadding, llPadding, llPadding, llPadding)
-            ll.gravity = Gravity.CENTER
-            var llParam = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            llParam.gravity = Gravity.CENTER
-            ll.layoutParams = llParam
-
-            val progressBar = ProgressBar(context)
-            progressBar.isIndeterminate = true
-            progressBar.setPadding(0, 0, llPadding, 0)
-            progressBar.layoutParams = llParam
-
-            llParam = LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            llParam.gravity = Gravity.CENTER
-            val tvText = TextView(context)
-            tvText.text = message
-            tvText.setTextColor(Color.parseColor("#000000"))
-            tvText.textSize = 20.toFloat()
-            tvText.layoutParams = llParam
-
-            ll.addView(progressBar)
-            ll.addView(tvText)
-
-            val builder = AlertDialog.Builder(context)
-            builder.setCancelable(true)
-            builder.setView(ll)
-
-            val dialog = builder.create()
-            val window = dialog.window
-            if (window != null) {
-                val layoutParams = WindowManager.LayoutParams()
-                layoutParams.copyFrom(dialog.window?.attributes)
-                layoutParams.width = LinearLayout.LayoutParams.WRAP_CONTENT
-                layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
-                dialog.window?.attributes = layoutParams
-            }
-            return dialog
+        fun setProgressDialog(context: Context, message: String): ProgressDialog {
+            val mProgressDialog = ProgressDialog(context)
+            mProgressDialog.setTitle("Loading")
+            mProgressDialog.setMessage("This is MESSAGE")
+            mProgressDialog.show()
+            return mProgressDialog
         }
+
+        fun isOnline(context: Context): Boolean {
+            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val n = cm.activeNetwork
+                if (n != null) {
+                    val nc = cm.getNetworkCapabilities(n)
+                    //It will check for both wifi and cellular network
+                    return nc!!.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || nc.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                }
+                return false
+            } else {
+                val netInfo = cm.activeNetworkInfo
+                return netInfo != null && netInfo.isConnectedOrConnecting
+            }
+        }
+
     }
+
 }
