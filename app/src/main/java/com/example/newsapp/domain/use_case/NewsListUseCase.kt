@@ -30,7 +30,5 @@ class NewsListUseCase @Inject constructor(private val newListRepository: NewList
         } catch (e: Exception) {
 
         }
-
     }
-
 }

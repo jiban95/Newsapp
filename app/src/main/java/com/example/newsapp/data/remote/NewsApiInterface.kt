@@ -7,5 +7,5 @@ import retrofit2.http.Query
 interface NewsApiInterface {
 
         @GET("top-headlines?sources=google-news-in&apiKey=d30ee69da98c4d328e5100826602fa50")
-        suspend fun getSearchMealList(): NewsListDTO
+        suspend fun getNewsList(): NewsListDTO
 }

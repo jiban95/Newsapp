@@ -45,6 +45,8 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.room:room-ktx:2.4.3'
+    def room_version = "2.4.3"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
@@ -80,7 +82,11 @@ dependencies {
     kapt "androidx.hilt:hilt-compiler:1.0.0"
     implementation 'androidx.fragment:fragment-ktx:1.5.4'
 
-    //Sweet Alert Dialog
-  //  implementation 'com.github.f0ris.sweetalert:library:1.5.1'
+    //room
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    // To use Kotlin annotation processing tool (kapt)
+    kapt "androidx.room:room-compiler:$room_version"
 
 }

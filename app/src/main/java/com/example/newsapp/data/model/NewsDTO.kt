@@ -18,16 +18,21 @@ fun NewsDTO.toDomainNews(): News {
     return News(
         title = this.title ?: "",
         publishedAt = this.publishedAt ?: "",
-        urlToImage = this.urlToImage ?: ""
+        urlToImage = this.urlToImage ?: "",
+        description = this.description ?: "",
+        url = this.url ?: "",
+        content = this.content ?: ""
     )
 }
-fun NewsDTO.toDomainNewsDetails():NewsDetails{
+
+fun NewsDTO.toDomainNewsDetails(): NewsDetails {
     return NewsDetails(
-        author=this.author?:"",
-        content=this.content?:"",
-        description = this.description?:"",
-        publishedAt = this.publishedAt?:"",
-        title = this.title?:"",
-        url= this.url?:"",
-        urlToImage= this.urlToImage?:"")
+        author = this.author ?: "",
+        content = this.content ?: "",
+        description = this.description ?: "",
+        publishedAt = this.publishedAt ?: "",
+        title = this.title ?: "",
+        url = this.url ?: "",
+        urlToImage = this.urlToImage ?: ""
+    )
 }

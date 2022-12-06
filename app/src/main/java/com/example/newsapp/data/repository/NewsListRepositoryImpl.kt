@@ -6,6 +6,6 @@ import com.example.newsapp.domain.repository.NewListRepository
 
 class NewsListRepositoryImpl(private val newsApiInterface: NewsApiInterface) : NewListRepository {
     override suspend fun getNewsList(): NewsListDTO {
-        return newsApiInterface.getSearchMealList()
+        return newsApiInterface.getNewsList()
     }
 }

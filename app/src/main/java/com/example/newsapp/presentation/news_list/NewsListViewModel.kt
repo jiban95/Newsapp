@@ -16,10 +16,11 @@ import javax.inject.Inject
 class NewsListViewModel @Inject constructor(private val newsListUseCase: NewsListUseCase):
     ViewModel() {
 
-    private val _newsList = MutableStateFlow<NewsListState>(NewsListState())
+    private val _newsList = MutableStateFlow(NewsListState())
     val newsList: StateFlow<NewsListState> = _newsList
 
     fun getNewsData() {
+
         newsListUseCase().onEach {
             when (it) {
                 is Resource.Loading -> {
