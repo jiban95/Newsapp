@@ -5,5 +5,5 @@ import com.example.newsapp.domain.model.News
 data class NewsListState(
     val isLoading: Boolean = false,
     val data: List<News>? = null,
-    val error: String = "Something went wrong"
+    val error: String = ""
 )

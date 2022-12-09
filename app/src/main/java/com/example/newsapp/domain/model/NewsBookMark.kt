@@ -7,11 +7,13 @@ import java.lang.reflect.Constructor
 @Entity(tableName = "newData")
 data class NewsBookMark(
     @PrimaryKey(autoGenerate = true)
-    val idn: Int,
-    val title:String,
-    val description:String,
-    val url:String,
-    val urlToImage:String,
-    val publishedAt:String,
-    val content:String
-)
+    var id: Int,
+    var title:String,
+    var description:String,
+    var url:String,
+    var urlToImage:String,
+    var publishedAt:String,
+    var content:String
+) {
+    constructor() : this(0,"","","","","","")
+}

@@ -11,4 +11,6 @@
     <color name="purple">#a68df2</color>
     <color name="white_gray">#f0f1f3</color>
     <color name="black_gray">#808a97</color>
+    <color name="red">#ff4d4d</color>
+    <color name="graphite">#707481</color>
 </resources>

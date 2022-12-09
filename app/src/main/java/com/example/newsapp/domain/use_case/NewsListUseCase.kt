@@ -15,13 +15,11 @@ class NewsListUseCase @Inject constructor(private val newListRepository: NewList
 
     operator fun invoke(): Flow<Resource<List<News>>> = flow {
         try {
-
             emit(Resource.Loading())
 
             val data = newListRepository.getNewsList()
             val domain = if (data.articles != null) data.articles.map { it.toDomainNews() } else emptyList()
 
-            Log.i("LogInfoData",""+data.articles.size)
             emit(Resource.Success(data = domain))
         } catch (e: HttpException) {
             emit(Resource.Error(message = e.localizedMessage ?: "An Unknown error occurred"))

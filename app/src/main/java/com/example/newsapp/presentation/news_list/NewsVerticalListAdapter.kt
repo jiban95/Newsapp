@@ -5,14 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.newsapp.R
 import com.example.newsapp.domain.model.News
 
-class NewsVerticalListAdapter(private val list: List<News>) :
+class NewsVerticalListAdapter(
+    private val list: List<News>,
+    private val listener: ItemClickListener
+) :
     RecyclerView.Adapter<NewsVerticalListAdapter.ViewHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
@@ -28,6 +33,9 @@ class NewsVerticalListAdapter(private val list: List<News>) :
         Glide.with(holder.image).setDefaultRequestOptions(options)
             .load(ItemsViewModel.urlToImage ?: "").into(holder.image)
         holder.tvHeading.text = ItemsViewModel.title
+        holder.parentView.setOnClickListener {
+            listener.onClickItem(position)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -37,5 +45,10 @@ class NewsVerticalListAdapter(private val list: List<News>) :
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val image: AppCompatImageView = itemView.findViewById(R.id.image)
         val tvHeading: AppCompatTextView = itemView.findViewById(R.id.tvHeading)
+        val parentView: ConstraintLayout = itemView.findViewById(R.id.parentView)
+    }
+
+    interface ItemClickListener {
+        fun onClickItem(id: Int)
     }
 }

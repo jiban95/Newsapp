@@ -1,6 +1,5 @@
 package com.example.newsapp.presentation.news_list
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,25 +8,20 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.newsapp.R
 import com.example.newsapp.common.AppCommon.CommonFile
 import com.example.newsapp.databinding.FragmentNewsListBinding
-import com.example.newsapp.domain.model.News
 import com.example.newsapp.domain.model.NewsBookMark
 import com.example.newsapp.presentation.news_db_operation.NewsDatabaseViewModel
+import com.example.newsapp.presentation.news_details.NewsDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
-class NewsListFragment : Fragment() {
-
+class NewsListFragment : Fragment(), NewsVerticalListAdapter.ItemClickListener {
     private val newsListViewModel: NewsListViewModel by viewModels()
     private val newsDatabaseViewModel: NewsDatabaseViewModel by viewModels()
-
     private var _binding: FragmentNewsListBinding? = null
 
     override fun onCreateView(
@@ -38,59 +32,76 @@ class NewsListFragment : Fragment() {
         return _binding?.root
     }
 
-    @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding!!.horizontalRecycler.setLayoutManager(
-            LinearLayoutManager(
-                context,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
+        _binding!!.horizontalRecycler.layoutManager = LinearLayoutManager(
+            context,
+            LinearLayoutManager.HORIZONTAL,
+            false
         )
-        _binding!!.verticalRecycler.setLayoutManager(
-            GridLayoutManager(
-                context,
-                2
-            )
+        _binding!!.verticalRecycler.layoutManager = GridLayoutManager(
+            context,
+            2
         )
 
         if (context?.let { CommonFile.isOnline(it) } == true) {
             newsListViewModel.getNewsData()
-            lifecycleScope.launch(Dispatchers.IO) {
-                val data: List<News>? = newsListViewModel.newsList.value.data
-                if (data != null) {
+            _binding!!.progressBar.visibility
 
-                    for (i in data!!.indices) {
-                        val news = NewsBookMark(
-                            i,
-                            data[i].title,
-                            data[i].description,
-                            data[i].url,
-                            data[i].urlToImage,
-                            data[i].publishedAt,
-                            data[i].content
-                        )
-                        newsDatabaseViewModel.insertNewsData(news)
-                    }
-                }
-                withContext(Dispatchers.Main){
-                    newsListViewModel.newsList.collect {
-                        if (it.data != null) {
-                            val newsHeadingAdapter = NewsHeadingAdapter(it.data)
-                            val newsVerticalAdapter = NewsVerticalListAdapter(it.data)
-                            _binding!!.horizontalRecycler.adapter = newsHeadingAdapter
-                            _binding!!.verticalRecycler.adapter = newsVerticalAdapter
+            lifecycle.coroutineScope.launchWhenCreated {
+                newsDatabaseViewModel.deleteNewsBookMark()
+                newsListViewModel.newsList.collect {
+                    if (it.data != null) {
+                        val newsHeadingAdapter = NewsHeadingAdapter(it.data)
+                        val newsVerticalAdapter =
+                            NewsVerticalListAdapter(it.data, this@NewsListFragment)
+                        _binding!!.horizontalRecycler.adapter = newsHeadingAdapter
+                        _binding!!.verticalRecycler.adapter = newsVerticalAdapter
+
+                        _binding!!.progressBar.visibility = View.INVISIBLE
+                        _binding!!.imgNoRecord.visibility = View.INVISIBLE
+                        _binding!!.tvNoDataFound.visibility = View.INVISIBLE
+                        _binding!!.layoutContainer.visibility = View.VISIBLE
+
+                        for (item in it.data) {
+                            var newsData = NewsBookMark()
+                            newsData.id = (it.data.indexOf(item)) + 1
+                            newsData.title = item.title
+                            newsData.description = item.description
+                            newsData.url = item.url
+                            newsData.urlToImage = item.urlToImage
+                            newsData.publishedAt = item.publishedAt
+                            newsData.content = item.content
+
+                            newsDatabaseViewModel.insertNewsData(newsData)
                         }
-                        if (it.isLoading) {
-                            _binding!!.progressBar.visibility = View.GONE
-                        }
+                    } else {
+                        _binding!!.progressBar.visibility = View.INVISIBLE
+                        _binding!!.layoutContainer.visibility = View.INVISIBLE
+                        _binding!!.imgNoRecord.visibility = View.VISIBLE
+                        _binding!!.tvNoDataFound.visibility = View.VISIBLE
+                        Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
                     }
                 }
             }
         } else {
-            _binding!!.progressBar.visibility = View.GONE
-            Toast.makeText(context, "No Internet available", Toast.LENGTH_LONG).show()
+            _binding!!.progressBar.visibility = View.INVISIBLE
+            _binding!!.layoutContainer.visibility = View.INVISIBLE
+            _binding!!.imgNoRecord.visibility = View.VISIBLE
+            _binding!!.tvNoDataFound.visibility = View.VISIBLE
+            Toast.makeText(context, "No internet available", Toast.LENGTH_LONG).show()
         }
+    }
+
+    override fun onClickItem(id: Int) {
+        val newsDetailsFragment = NewsDetailsFragment()
+        val args = Bundle()
+        args.putInt("id", id)
+        newsDetailsFragment.arguments = args
+
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace(R.id.fragment_container, newsDetailsFragment)
+            ?.addToBackStack(null)
+            ?.commit()
     }
 }
