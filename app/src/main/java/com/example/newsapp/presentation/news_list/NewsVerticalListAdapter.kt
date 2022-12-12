@@ -34,7 +34,7 @@ class NewsVerticalListAdapter(
             .load(ItemsViewModel.urlToImage ?: "").into(holder.image)
         holder.tvHeading.text = ItemsViewModel.title
         holder.parentView.setOnClickListener {
-            listener.onClickItem(position)
+            listener.onClickItem(position+1)
         }
     }
 

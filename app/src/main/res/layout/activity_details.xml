@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.news_details.NewsDetailsFragment">
+    tools:context=".presentation.news_details.DetailsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -42,9 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
-            android:text="12-02-2022 18:14pm"
             android:textColor="@color/black_gray"
-            app:fontFamily="@font/regular_font"
+            app:fontFamily="@font/poppins_regular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
@@ -58,11 +56,10 @@
             android:drawablePadding="10dp"
             android:ellipsize="end"
             android:maxLines="3"
-            android:text="Bathing in Cleopatra's desert pool"
             android:textColor="@color/graphite"
-            android:textSize="28sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            app:fontFamily="@font/regular_font"
+            app:fontFamily="@font/poppins_regular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnNewsType" />
@@ -75,14 +72,14 @@
             android:layout_marginTop="12dp"
             android:text="Destination Egypt"
             android:textColor="@color/black_gray"
-            app:fontFamily="@font/regular_font"
+            app:fontFamily="@font/poppins_regular"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image"
             android:layout_width="0dp"
-            android:layout_height="170dp"
+            android:layout_height="180dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/round_corner"
             android:scaleType="centerCrop"
@@ -97,8 +94,9 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="12dp"
+            android:textSize="13sp"
             android:textColor="@color/black_gray"
-            app:fontFamily="@font/regular_font"
+            app:fontFamily="@font/poppins_regular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image" />

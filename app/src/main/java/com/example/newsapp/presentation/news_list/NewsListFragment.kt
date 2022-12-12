@@ -1,5 +1,6 @@
 package com.example.newsapp.presentation.news_list
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.newsapp.R
 import com.example.newsapp.common.AppCommon.CommonFile
 import com.example.newsapp.databinding.FragmentNewsListBinding
 import com.example.newsapp.domain.model.NewsBookMark
 import com.example.newsapp.presentation.news_db_operation.NewsDatabaseViewModel
-import com.example.newsapp.presentation.news_details.NewsDetailsFragment
+import com.example.newsapp.presentation.news_details.DetailsActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -94,14 +94,6 @@ class NewsListFragment : Fragment(), NewsVerticalListAdapter.ItemClickListener {
     }
 
     override fun onClickItem(id: Int) {
-        val newsDetailsFragment = NewsDetailsFragment()
-        val args = Bundle()
-        args.putInt("id", id)
-        newsDetailsFragment.arguments = args
-
-        activity?.supportFragmentManager?.beginTransaction()
-            ?.replace(R.id.fragment_container, newsDetailsFragment)
-            ?.addToBackStack(null)
-            ?.commit()
+        startActivity(Intent(activity, DetailsActivity::class.java).putExtra("id",id))
     }
 }
