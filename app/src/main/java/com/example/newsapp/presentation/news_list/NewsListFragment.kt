@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+
 import com.example.newsapp.common.AppCommon.CommonFile
 import com.example.newsapp.databinding.FragmentNewsListBinding
 import com.example.newsapp.domain.model.NewsBookMark
@@ -80,6 +81,7 @@ class NewsListFragment : Fragment(), NewsVerticalListAdapter.ItemClickListener {
                         _binding!!.layoutContainer.visibility = View.INVISIBLE
                         _binding!!.imgNoRecord.visibility = View.VISIBLE
                         _binding!!.tvNoDataFound.visibility = View.VISIBLE
+                        if (it.error.isNotEmpty())
                         Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
                     }
                 }

@@ -41,7 +41,6 @@ object HiltModule {
         "news_app"
     ).build() // The reason we can construct a database for the repo
 
-
     @Provides
     @Singleton
     fun provideNewsListRepository(newsApiInterface: NewsApiInterface): NewListRepository {
@@ -53,5 +52,4 @@ object HiltModule {
     fun provideNewsDao(db: NewsAppDatabase): NewsDao {
         return db.getNewsDao()
     }
-
 }

@@ -30,7 +30,10 @@ class DetailsActivity : AppCompatActivity() {
                 R.drawable.ic_back
             )
         )
-        ids = intent.getIntExtra("id",0)
+        _binding.toolbar.setOnClickListener {
+
+        }
+        ids = intent.getIntExtra("id", 0)
 
         ids?.let {
             lifecycle.coroutineScope.launchWhenCreated {
@@ -50,11 +53,16 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.details_page_option_menu,menu)
+        menuInflater.inflate(R.menu.details_page_option_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

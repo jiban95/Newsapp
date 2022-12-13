@@ -8,14 +8,6 @@ import android.os.Build
 
 class CommonFile {
     companion object CommonMethod {
-        fun setProgressDialog(context: Context, message: String): ProgressDialog {
-            val mProgressDialog = ProgressDialog(context)
-            mProgressDialog.setTitle("Loading")
-            mProgressDialog.setMessage(message)
-            mProgressDialog.show()
-            mProgressDialog.setCancelable(false)
-            return mProgressDialog
-        }
 
         fun isOnline(context: Context): Boolean {
             val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
