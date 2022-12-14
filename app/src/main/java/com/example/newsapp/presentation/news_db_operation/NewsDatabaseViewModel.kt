@@ -26,8 +26,8 @@ class NewsDatabaseViewModel @Inject constructor(private val newsDbUseCase: NewsD
         }
     }
 
-    suspend fun getNewsBookMark(ids: Int): NewsBookMark = withContext(Dispatchers.IO) {
-        return@withContext newsDbUseCase.getNewsBookMark(ids)
+    suspend fun getNewsBookMark(): List<NewsBookMark> = withContext(Dispatchers.IO) {
+        return@withContext newsDbUseCase.getNewsBookMark()
     }
 
     fun getCount(): LiveData<Int> {

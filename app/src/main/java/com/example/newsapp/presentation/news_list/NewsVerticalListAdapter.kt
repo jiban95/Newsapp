@@ -26,15 +26,15 @@ class NewsVerticalListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val ItemsViewModel = list[position]
+        val itemsViewModel = list[position]
         // sets the text to the textview from our itemHolder class
 
         val options = RequestOptions.placeholderOf(R.drawable.placeholder).error(R.drawable.error)
         Glide.with(holder.image).setDefaultRequestOptions(options)
-            .load(ItemsViewModel.urlToImage ?: "").into(holder.image)
-        holder.tvHeading.text = ItemsViewModel.title
+            .load(itemsViewModel.urlToImage ?: "").into(holder.image)
+        holder.tvHeading.text = itemsViewModel.title
         holder.parentView.setOnClickListener {
-            listener.onClickItem(position+1)
+            listener.onClickItem(position+1,itemsViewModel)
         }
     }
 
@@ -49,6 +49,6 @@ class NewsVerticalListAdapter(
     }
 
     interface ItemClickListener {
-        fun onClickItem(id: Int)
+        fun onClickItem(id: Int, itemsViewModel: News)
     }
 }

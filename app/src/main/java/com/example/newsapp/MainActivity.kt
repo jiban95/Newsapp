@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.newsapp.databinding.ActivityMainBinding
+import com.example.newsapp.presentation.news_bookmark.NewsBookmarkListFragment
 import com.example.newsapp.presentation.news_list.NewsListFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,8 +29,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.home -> {
                     fragment = NewsListFragment()
                 }
-                R.id.search -> {
-
+                R.id.bookmark -> {
+                    fragment = NewsBookmarkListFragment()
                 }
             }
 

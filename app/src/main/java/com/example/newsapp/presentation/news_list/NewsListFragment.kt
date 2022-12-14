@@ -11,18 +11,18 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.example.newsapp.common.AppCommon.CommonFile
 import com.example.newsapp.databinding.FragmentNewsListBinding
+import com.example.newsapp.domain.model.News
 import com.example.newsapp.domain.model.NewsBookMark
 import com.example.newsapp.presentation.news_db_operation.NewsDatabaseViewModel
 import com.example.newsapp.presentation.news_details.DetailsActivity
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.Serializable
 
 @AndroidEntryPoint
 class NewsListFragment : Fragment(), NewsVerticalListAdapter.ItemClickListener {
     private val newsListViewModel: NewsListViewModel by viewModels()
-    private val newsDatabaseViewModel: NewsDatabaseViewModel by viewModels()
     private var _binding: FragmentNewsListBinding? = null
 
     override fun onCreateView(
@@ -50,7 +50,6 @@ class NewsListFragment : Fragment(), NewsVerticalListAdapter.ItemClickListener {
             _binding!!.progressBar.visibility
 
             lifecycle.coroutineScope.launchWhenCreated {
-                newsDatabaseViewModel.deleteNewsBookMark()
                 newsListViewModel.newsList.collect {
                     if (it.data != null) {
                         val newsHeadingAdapter = NewsHeadingAdapter(it.data)
@@ -63,25 +62,12 @@ class NewsListFragment : Fragment(), NewsVerticalListAdapter.ItemClickListener {
                         _binding!!.imgNoRecord.visibility = View.INVISIBLE
                         _binding!!.tvNoDataFound.visibility = View.INVISIBLE
                         _binding!!.layoutContainer.visibility = View.VISIBLE
-
-                        for (item in it.data) {
-                            val newsData = NewsBookMark()
-                            newsData.id = (it.data.indexOf(item)) + 1
-                            newsData.title = item.title
-                            newsData.description = item.description
-                            newsData.url = item.url
-                            newsData.urlToImage = item.urlToImage
-                            newsData.publishedAt = item.publishedAt
-                            newsData.content = item.content
-
-                            newsDatabaseViewModel.insertNewsData(newsData)
-                        }
                     } else {
                         _binding!!.progressBar.visibility = View.INVISIBLE
                         _binding!!.layoutContainer.visibility = View.INVISIBLE
                         _binding!!.imgNoRecord.visibility = View.VISIBLE
                         _binding!!.tvNoDataFound.visibility = View.VISIBLE
-                        if (it.error.isNotEmpty()){
+                        if (it.error.isNotEmpty()) {
                             Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
                         }
                     }
@@ -96,7 +82,7 @@ class NewsListFragment : Fragment(), NewsVerticalListAdapter.ItemClickListener {
         }
     }
 
-    override fun onClickItem(id: Int) {
-        startActivity(Intent(activity, DetailsActivity::class.java).putExtra("id",id))
+    override fun onClickItem(id: Int, newsInfo: News) {
+        startActivity(Intent(activity, DetailsActivity::class.java).putExtra("id", id).putExtra("news",newsInfo))
     }
 }

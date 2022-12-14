@@ -14,8 +14,8 @@ class NewsDataRepository @Inject constructor(private val newsDao: NewsDao) {
         newsDao.deleteAllNews()
     }
 
-    fun getNewsBookMark(ids: Int): NewsBookMark {
-        return newsDao.getNewsBookMark(ids)
+    fun getNewsBookMark(): List<NewsBookMark> {
+        return newsDao.getNewsBookMark()
     }
 
     fun getCount(): LiveData<Int> {

@@ -15,8 +15,8 @@ class NewsDbUseCase @Inject constructor(private val newsDatabaseRepo: NewsDataRe
         newsDatabaseRepo.deleteNewsBookMark()
     }
 
-    fun getNewsBookMark(ids: Int): NewsBookMark {
-        return newsDatabaseRepo.getNewsBookMark(ids)
+    fun getNewsBookMark(): List<NewsBookMark> {
+        return newsDatabaseRepo.getNewsBookMark()
     }
 
     fun getCount(): LiveData<Int> {
