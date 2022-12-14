@@ -1,5 +1,6 @@
 package com.example.newsapp.presentation.news_details
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.newsapp.R
 import com.example.newsapp.databinding.ActivityDetailsBinding
+
 import com.example.newsapp.presentation.news_db_operation.NewsDatabaseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,8 +23,10 @@ class DetailsActivity : AppCompatActivity() {
     var ids: Int? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         _binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(_binding.root)
+        setSupportActionBar(_binding.toolbar)
 
         _binding?.toolbar?.setNavigationIcon(
             ContextCompat.getDrawable(
@@ -30,8 +34,9 @@ class DetailsActivity : AppCompatActivity() {
                 R.drawable.ic_back
             )
         )
-        _binding.toolbar.setOnClickListener {
-
+        _binding.toolbar.overflowIcon?.setTint(Color.BLACK)
+        _binding.toolbar.setNavigationOnClickListener {
+            onBackPressed()
         }
         ids = intent.getIntExtra("id", 0)
 
@@ -44,7 +49,7 @@ class DetailsActivity : AppCompatActivity() {
                     _binding!!.tvDescription.text = description
                     _binding!!.tvDescription.text = description
                     val options =
-                        RequestOptions.placeholderOf(R.drawable.placeholder).error(R.drawable.error)
+                        RequestOptions.placeholderOf(R.drawable.placeholder).error(R.drawable.placeholder)
                     Glide.with(_binding!!.image).setDefaultRequestOptions(options)
                         .load(urlToImage).into(_binding!!.image)
                 }

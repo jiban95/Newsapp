@@ -65,7 +65,7 @@ class NewsListFragment : Fragment(), NewsVerticalListAdapter.ItemClickListener {
                         _binding!!.layoutContainer.visibility = View.VISIBLE
 
                         for (item in it.data) {
-                            var newsData = NewsBookMark()
+                            val newsData = NewsBookMark()
                             newsData.id = (it.data.indexOf(item)) + 1
                             newsData.title = item.title
                             newsData.description = item.description
@@ -81,8 +81,9 @@ class NewsListFragment : Fragment(), NewsVerticalListAdapter.ItemClickListener {
                         _binding!!.layoutContainer.visibility = View.INVISIBLE
                         _binding!!.imgNoRecord.visibility = View.VISIBLE
                         _binding!!.tvNoDataFound.visibility = View.VISIBLE
-                        if (it.error.isNotEmpty())
-                        Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
+                        if (it.error.isNotEmpty()){
+                            Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
             }
