@@ -18,8 +18,40 @@ class NewsListViewModel @Inject constructor(private val newsListUseCase: NewsLis
     private val _newsList = MutableStateFlow(NewsListState())
     val newsList: StateFlow<NewsListState> = _newsList
 
-    fun getNewsData() {
-        newsListUseCase().onEach {
+    fun getNewsData(newsType: Int) {
+        newsListUseCase(newsType).onEach {
+            when (it) {
+                is Resource.Loading -> {
+                    _newsList.value = NewsListState(isLoading = true)
+                }
+                is Resource.Success -> {
+                    _newsList.value = NewsListState(data = it.data)
+                }
+                is Resource.Error -> {
+                    _newsList.value = NewsListState(error = it.message ?: "")
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun getEventData(newsType: Int) {
+        newsListUseCase(newsType).onEach {
+            when (it) {
+                is Resource.Loading -> {
+                    _newsList.value = NewsListState(isLoading = true)
+                }
+                is Resource.Success -> {
+                    _newsList.value = NewsListState(data = it.data)
+                }
+                is Resource.Error -> {
+                    _newsList.value = NewsListState(error = it.message ?: "")
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun getWeatherData(newsType: Int) {
+        newsListUseCase(newsType).onEach {
             when (it) {
                 is Resource.Loading -> {
                     _newsList.value = NewsListState(isLoading = true)

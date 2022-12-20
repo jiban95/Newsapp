@@ -30,7 +30,7 @@ class NewsBookmarkAdapter(private val newsBookmarkList: List<NewsBookMark>) :
             val options =
                 RequestOptions.placeholderOf(R.drawable.placeholder).error(R.drawable.placeholder)
             Glide.with(holder.image).setDefaultRequestOptions(options)
-                .load(urlToImage ?: "").into(holder.image)
+                .load(urlToImage).into(holder.image)
             holder.tvHeading.text = title
         }
     }

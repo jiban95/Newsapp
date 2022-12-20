@@ -18,7 +18,6 @@ class NewsVerticalListAdapter(
 ) :
     RecyclerView.Adapter<NewsVerticalListAdapter.ViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.vertical_news_card, parent, false)
@@ -29,9 +28,9 @@ class NewsVerticalListAdapter(
         val itemsViewModel = list[position]
         // sets the text to the textview from our itemHolder class
 
-        val options = RequestOptions.placeholderOf(R.drawable.placeholder).error(R.drawable.error)
+        val options = RequestOptions.placeholderOf(R.drawable.placeholder).error(R.drawable.placeholder)
         Glide.with(holder.image).setDefaultRequestOptions(options)
-            .load(itemsViewModel.urlToImage ?: "").into(holder.image)
+            .load(itemsViewModel.urlToImage).into(holder.image)
         holder.tvHeading.text = itemsViewModel.title
         holder.parentView.setOnClickListener {
             listener.onClickItem(position+1,itemsViewModel)

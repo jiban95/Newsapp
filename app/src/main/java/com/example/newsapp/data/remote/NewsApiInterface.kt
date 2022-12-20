@@ -8,7 +8,16 @@ import retrofit2.http.Query
 
 interface NewsApiInterface {
 
-        @GET("top-headlines?sources=google-news-in&apiKey=${BuildConfig.API_KEY}")
-        suspend fun getNewsList(): NewsListDTO
+    @GET("top-headlines?sources=google-news-in&apiKey=${BuildConfig.API_KEY}")
+    suspend fun getNewsList(): NewsListDTO
+
+    @GET("top-headlines?q=event&apiKey=${BuildConfig.API_KEY}")
+    suspend fun getEventList(): NewsListDTO
+
+    @GET("top-headlines?q=weather&apiKey=${BuildConfig.API_KEY}")
+    suspend fun getWeatherList(): NewsListDTO
+
+   /* @GET("top-headlines?q={q}&apiKey=${BuildConfig.API_KEY}")
+    suspend fun getWeatherList(@Query("q")string: String): NewsListDTO*/
 
 }

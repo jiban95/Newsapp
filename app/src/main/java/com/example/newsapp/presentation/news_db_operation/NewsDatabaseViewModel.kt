@@ -1,6 +1,5 @@
 package com.example.newsapp.presentation.news_db_operation
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsapp.domain.model.NewsBookMark
@@ -28,9 +27,5 @@ class NewsDatabaseViewModel @Inject constructor(private val newsDbUseCase: NewsD
 
     suspend fun getNewsBookMark(): List<NewsBookMark> = withContext(Dispatchers.IO) {
         return@withContext newsDbUseCase.getNewsBookMark()
-    }
-
-    fun getCount(): LiveData<Int> {
-        return newsDbUseCase.getCount()
     }
 }

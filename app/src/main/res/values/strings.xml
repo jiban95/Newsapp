@@ -9,4 +9,7 @@
     <string name="events">Events</string>
     <string name="news">News</string>
     <string name="no_data_found">No Data Found</string>
+    <string name="search_hint">Type here</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="search">Search</string>
 </resources>

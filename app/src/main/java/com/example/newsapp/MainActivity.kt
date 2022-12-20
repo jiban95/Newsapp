@@ -1,16 +1,18 @@
 package com.example.newsapp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.newsapp.databinding.ActivityMainBinding
 import com.example.newsapp.presentation.news_bookmark.NewsBookmarkListFragment
 import com.example.newsapp.presentation.news_list.NewsListFragment
+import com.example.newsapp.presentation.news_search.NewsSearchActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.bookmark -> {
                     fragment = NewsBookmarkListFragment()
                 }
+                R.id.search -> {
+                    startActivity(Intent(this, NewsSearchActivity::class.java))
+                }
             }
 
             loadFragment(fragment)
@@ -43,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
-                .commit();
+                .commit()
         }
         return true
     }

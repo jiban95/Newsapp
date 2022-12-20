@@ -37,7 +37,7 @@ class NewsBookmarkListFragment : Fragment() {
         lifecycle.coroutineScope.launchWhenCreated {
 
             val newsBookmarkData = newsDatabaseViewModel.getNewsBookMark()
-            if (newsBookmarkData != null && newsBookmarkData.isNotEmpty()) {
+            if (newsBookmarkData.isNotEmpty()) {
                 val newsBookmarkAdapter = NewsBookmarkAdapter(newsBookmarkData)
                 _binding!!.newsRecycler.adapter = newsBookmarkAdapter
             } else {

@@ -18,7 +18,4 @@ class NewsDataRepository @Inject constructor(private val newsDao: NewsDao) {
         return newsDao.getNewsBookMark()
     }
 
-    fun getCount(): LiveData<Int> {
-        return newsDao.getCount()
-    }
 }
