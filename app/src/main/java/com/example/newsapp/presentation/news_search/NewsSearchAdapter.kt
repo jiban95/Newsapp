@@ -1,4 +1,4 @@
-package com.example.newsapp.presentation.news_list
+package com.example.newsapp.presentation.news_search
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +11,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.newsapp.R
 import com.example.newsapp.domain.model.News
+import com.example.newsapp.presentation.news_list.NewsVerticalListAdapter
 
-class NewsVerticalListAdapter(
-    private val list: List<News>,
-    private val listener: NewsClickListener
-) :
-    RecyclerView.Adapter<NewsVerticalListAdapter.ViewHolder>() {
+class NewsSearchAdapter(private val list: List<News>,private val listener: NewsVerticalListAdapter.NewsClickListener) :
+    RecyclerView.Adapter<NewsSearchAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
@@ -34,7 +32,7 @@ class NewsVerticalListAdapter(
             .load(newsModel.urlToImage).into(holder.image)
         holder.tvHeading.text = newsModel.title
         holder.parentView.setOnClickListener {
-            listener.onNewsItemClick(position + 1, newsModel)
+            listener.onNewsItemClick(position+1,newsModel)
         }
     }
 
@@ -49,6 +47,6 @@ class NewsVerticalListAdapter(
     }
 
     interface NewsClickListener {
-        fun onNewsItemClick(id: Int, itemsViewModel: News)
+        fun onClickItem(id: Int, itemsViewModel: News)
     }
 }

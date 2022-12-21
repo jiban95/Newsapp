@@ -5,30 +5,19 @@ import com.example.newsapp.common.Resource
 import com.example.newsapp.data.model.NewsListDTO
 import com.example.newsapp.data.model.toDomainNews
 import com.example.newsapp.domain.model.News
-import com.example.newsapp.domain.repository.NewListRepository
+import com.example.newsapp.domain.repository.NewsSearchRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class NewsListUseCase @Inject constructor(private val newListRepository: NewListRepository) {
+class NewsSearchUseCase @Inject constructor(private val newsSearchRepository: NewsSearchRepository) {
     lateinit var data: NewsListDTO
-    operator fun invoke(newsType: Int): Flow<Resource<List<News>>> = flow {
+    operator fun invoke(query: String): Flow<Resource<List<News>>> = flow {
         try {
             emit(Resource.Loading())
-            when (newsType) {
-                1 -> {
-                    data = newListRepository.getNewsList()
-                }
-                2 -> {
-                    data = newListRepository.getEventList()
-                }
-                3 -> {
-                    data = newListRepository.getWeatherList()
-                }
-
-            }
+            data = newsSearchRepository.getSearchDataList(query)
             val domain = data.articles.map { it.toDomainNews() }
             emit(Resource.Success(data = domain))
         } catch (e: HttpException) {

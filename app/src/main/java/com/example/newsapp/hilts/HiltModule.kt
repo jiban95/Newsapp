@@ -6,8 +6,10 @@ import com.example.newsapp.common.Constants
 import com.example.newsapp.data.model.dao.NewsDao
 import com.example.newsapp.data.remote.NewsApiInterface
 import com.example.newsapp.data.repository.NewsListRepositoryImpl
+import com.example.newsapp.data.repository.NewsSearchListRepositoryImpl
 import com.example.newsapp.database.NewsAppDatabase
 import com.example.newsapp.domain.repository.NewListRepository
+import com.example.newsapp.domain.repository.NewsSearchRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,6 +47,12 @@ object HiltModule {
     @Singleton
     fun provideNewsListRepository(newsApiInterface: NewsApiInterface): NewListRepository {
         return NewsListRepositoryImpl(newsApiInterface)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewsSearchListRepository(newsApiInterface: NewsApiInterface): NewsSearchRepository {
+        return NewsSearchListRepositoryImpl(newsApiInterface)
     }
 
     @Provides

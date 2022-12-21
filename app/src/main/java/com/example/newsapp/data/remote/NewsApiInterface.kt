@@ -17,7 +17,8 @@ interface NewsApiInterface {
     @GET("top-headlines?q=weather&apiKey=${BuildConfig.API_KEY}")
     suspend fun getWeatherList(): NewsListDTO
 
-   /* @GET("top-headlines?q={q}&apiKey=${BuildConfig.API_KEY}")
-    suspend fun getWeatherList(@Query("q")string: String): NewsListDTO*/
+    @GET("top-headlines")
+    suspend fun getSearchDataList(@Query("q")q: String,@Query("apiKey")apiKey:String): NewsListDTO
+
 
 }

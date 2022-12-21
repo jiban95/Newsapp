@@ -20,7 +20,7 @@ import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NewsListFragment : Fragment(), NewsVerticalListAdapter.ItemClickListener {
+class NewsListFragment : Fragment(), NewsVerticalListAdapter.NewsClickListener {
     private val newsListViewModel: NewsListViewModel by viewModels()
     private var _binding: FragmentNewsListBinding? = null
 
@@ -49,6 +49,7 @@ class NewsListFragment : Fragment(), NewsVerticalListAdapter.ItemClickListener {
                     }
                 }
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab?) {
             }
 
@@ -68,83 +69,93 @@ class NewsListFragment : Fragment(), NewsVerticalListAdapter.ItemClickListener {
         callNewsData() // Calling news api to get news info
     }
 
-    override fun onClickItem(id: Int, newsInfo: News) {
+    override fun onNewsItemClick(id: Int, newsModel: News) {
         startActivity(
             Intent(activity, DetailsActivity::class.java).putExtra("id", id)
-                .putExtra("news", newsInfo)
+                .putExtra("news", newsModel)
         )
     }
 
     private fun callNewsData() {
-        val dialog = LoadingDialog(requireActivity())
-        dialog.startLoading()
+        val dialog = LoadingDialog()
         if (context?.let { CommonFile.isOnline(it) } == true) {
             newsListViewModel.getNewsData(1)
 
             lifecycle.coroutineScope.launchWhenCreated {
-                newsListViewModel.newsList.collect {
-                    if (it.data?.isNotEmpty() == true) {
-                        val newsHeadingAdapter = NewsHeadingAdapter(it.data)
-                        val newsVerticalAdapter =
-                            NewsVerticalListAdapter(it.data, this@NewsListFragment)
-                        _binding!!.horizontalRecycler.adapter = newsHeadingAdapter
-                        _binding!!.verticalRecycler.adapter = newsVerticalAdapter
+                newsListViewModel.newsList.collect { it ->
 
-                        _binding!!.imgNoRecord.visibility = View.INVISIBLE
-                        _binding!!.tvNoDataFound.visibility = View.INVISIBLE
-                        _binding!!.layoutContainer.visibility = View.VISIBLE
-                    } else {
+                    if (it.isLoading) {
+                        dialog.startLoading(requireActivity())
+                    }
+
+                    if (it.error.isNotEmpty()) {
+                        dialog.dismiss()
                         _binding!!.layoutContainer.visibility = View.INVISIBLE
                         _binding!!.imgNoRecord.visibility = View.VISIBLE
                         _binding!!.tvNoDataFound.visibility = View.VISIBLE
-                        if (it.error.isNotEmpty()) {
-                            Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
+                    }
+                    it.data?.let {
+                        if (it.isNotEmpty()) {
+                            val newsHeadingAdapter = NewsHeadingAdapter(it)
+                            val newsVerticalAdapter =
+                                NewsVerticalListAdapter(it, this@NewsListFragment)
+                            _binding!!.horizontalRecycler.adapter = newsHeadingAdapter
+                            _binding!!.verticalRecycler.adapter = newsVerticalAdapter
+
+                            _binding!!.imgNoRecord.visibility = View.INVISIBLE
+                            _binding!!.tvNoDataFound.visibility = View.INVISIBLE
+                            _binding!!.layoutContainer.visibility = View.VISIBLE
+                            dialog.dismiss()
                         }
                     }
-                    dialog.dismiss()
                 }
             }
         } else {
             _binding!!.layoutContainer.visibility = View.INVISIBLE
             _binding!!.imgNoRecord.visibility = View.VISIBLE
             _binding!!.tvNoDataFound.visibility = View.VISIBLE
-             dialog.dismiss()
             Toast.makeText(context, "No internet available", Toast.LENGTH_LONG).show()
         }
     }
 
     private fun callEventsData() {
-        val dialog = LoadingDialog(requireActivity())
+        val dialog = LoadingDialog()
         if (context?.let { CommonFile.isOnline(it) } == true) {
             newsListViewModel.getEventData(2)
-            dialog.startLoading()
 
             lifecycle.coroutineScope.launchWhenCreated {
-                newsListViewModel.newsList.collect {
-                    if (it.data?.isNotEmpty() == true) {
-                        val newsHeadingAdapter = NewsHeadingAdapter(it.data)
-                        val newsVerticalAdapter =
-                            NewsVerticalListAdapter(it.data, this@NewsListFragment)
-                        _binding!!.horizontalRecycler.adapter = newsHeadingAdapter
-                        _binding!!.verticalRecycler.adapter = newsVerticalAdapter
+                newsListViewModel.newsList.collect { it ->
 
-                        dialog.dismiss()
-                        _binding!!.imgNoRecord.visibility = View.INVISIBLE
-                        _binding!!.tvNoDataFound.visibility = View.INVISIBLE
-                        _binding!!.layoutContainer.visibility = View.VISIBLE
-                    } else {
+                    if (it.isLoading) {
+                        dialog.startLoading(requireActivity())
+                    }
+
+                    if (it.error.isNotEmpty()) {
                         dialog.dismiss()
                         _binding!!.layoutContainer.visibility = View.INVISIBLE
                         _binding!!.imgNoRecord.visibility = View.VISIBLE
                         _binding!!.tvNoDataFound.visibility = View.VISIBLE
-                        if (it.error.isNotEmpty()) {
-                            Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
+                    }
+
+                    it.data?.let {
+                        if (it.isNotEmpty()) {
+                            val newsHeadingAdapter = NewsHeadingAdapter(it)
+                            val newsVerticalAdapter =
+                                NewsVerticalListAdapter(it, this@NewsListFragment)
+                            _binding!!.horizontalRecycler.adapter = newsHeadingAdapter
+                            _binding!!.verticalRecycler.adapter = newsVerticalAdapter
+
+                            _binding!!.imgNoRecord.visibility = View.INVISIBLE
+                            _binding!!.tvNoDataFound.visibility = View.INVISIBLE
+                            _binding!!.layoutContainer.visibility = View.VISIBLE
+                            dialog.dismiss()
                         }
                     }
                 }
             }
         } else {
-            dialog.dismiss()
             _binding!!.layoutContainer.visibility = View.INVISIBLE
             _binding!!.imgNoRecord.visibility = View.VISIBLE
             _binding!!.tvNoDataFound.visibility = View.VISIBLE
@@ -153,37 +164,41 @@ class NewsListFragment : Fragment(), NewsVerticalListAdapter.ItemClickListener {
     }
 
     private fun callWeatherData() {
-        val dialog = LoadingDialog(requireActivity())
+        val dialog = LoadingDialog()
         if (context?.let { CommonFile.isOnline(it) } == true) {
             newsListViewModel.getWeatherData(3)
-            dialog.startLoading()
 
             lifecycle.coroutineScope.launchWhenCreated {
-                newsListViewModel.newsList.collect {
-                    if (it.data?.isNotEmpty() == true) {
-                        val newsHeadingAdapter = NewsHeadingAdapter(it.data)
-                        val newsVerticalAdapter =
-                            NewsVerticalListAdapter(it.data, this@NewsListFragment)
-                        _binding!!.horizontalRecycler.adapter = newsHeadingAdapter
-                        _binding!!.verticalRecycler.adapter = newsVerticalAdapter
+                newsListViewModel.newsList.collect { it ->
+                    if (it.isLoading) {
+                        dialog.startLoading(requireActivity())
+                    }
 
-                        dialog.dismiss()
-                        _binding!!.imgNoRecord.visibility = View.INVISIBLE
-                        _binding!!.tvNoDataFound.visibility = View.INVISIBLE
-                        _binding!!.layoutContainer.visibility = View.VISIBLE
-                    } else {
+                    if (it.error.isNotEmpty()) {
                         dialog.dismiss()
                         _binding!!.layoutContainer.visibility = View.INVISIBLE
                         _binding!!.imgNoRecord.visibility = View.VISIBLE
                         _binding!!.tvNoDataFound.visibility = View.VISIBLE
-                        if (it.error.isNotEmpty()) {
-                            Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, it.error, Toast.LENGTH_LONG).show()
+                    }
+
+                    it.data?.let {
+                        if (it.isNotEmpty()) {
+                            val newsHeadingAdapter = NewsHeadingAdapter(it)
+                            val newsVerticalAdapter =
+                                NewsVerticalListAdapter(it, this@NewsListFragment)
+                            _binding!!.horizontalRecycler.adapter = newsHeadingAdapter
+                            _binding!!.verticalRecycler.adapter = newsVerticalAdapter
+
+                            _binding!!.imgNoRecord.visibility = View.INVISIBLE
+                            _binding!!.tvNoDataFound.visibility = View.INVISIBLE
+                            _binding!!.layoutContainer.visibility = View.VISIBLE
+                            dialog.dismiss()
                         }
                     }
                 }
             }
         } else {
-            dialog.dismiss()
             _binding!!.layoutContainer.visibility = View.INVISIBLE
             _binding!!.imgNoRecord.visibility = View.VISIBLE
             _binding!!.tvNoDataFound.visibility = View.VISIBLE

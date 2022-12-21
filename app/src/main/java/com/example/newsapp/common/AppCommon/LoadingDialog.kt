@@ -4,10 +4,10 @@ import android.app.Activity
 import androidx.appcompat.app.AlertDialog
 import com.example.newsapp.R
 
-class LoadingDialog(val activity: Activity) {
+class LoadingDialog() {
     private lateinit var dialog: AlertDialog
 
-    fun startLoading() {
+    fun startLoading(activity: Activity) {
         val inflater = activity.layoutInflater
         val dialogView = inflater.inflate(R.layout.layout_progress_dialog, null)
         val builder = AlertDialog.Builder(activity)
@@ -18,6 +18,7 @@ class LoadingDialog(val activity: Activity) {
     }
 
     fun dismiss() {
+        if (dialog.isShowing)
         dialog.dismiss()
     }
 }

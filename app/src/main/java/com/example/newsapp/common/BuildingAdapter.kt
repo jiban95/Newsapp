@@ -8,6 +8,6 @@ import com.example.newsapp.R
 
 @BindingAdapter("urlToImage")
 fun urlToImage(view: AppCompatImageView, url: String) {
-    val options = RequestOptions.placeholderOf(R.drawable.placeholder).error(R.drawable.error)
+    val options = RequestOptions.placeholderOf(R.drawable.placeholder).error(R.drawable.placeholder)
     Glide.with(view).setDefaultRequestOptions(options).load(url ?: "").into(view)
 }
