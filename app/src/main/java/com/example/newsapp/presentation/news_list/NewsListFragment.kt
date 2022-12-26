@@ -20,7 +20,7 @@ import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
- * Fragment class to show news vertically and horizontally
+ * Fragment class to show news vertically
  */
 @AndroidEntryPoint
 class NewsListFragment : Fragment(), NewsVerticalListAdapter.NewsClickListener {
