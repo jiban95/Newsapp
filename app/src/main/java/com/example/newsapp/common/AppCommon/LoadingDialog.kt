@@ -18,7 +18,6 @@ class LoadingDialog() {
     }
 
     fun dismiss() {
-        if (dialog.isShowing)
         dialog.dismiss()
     }
 }

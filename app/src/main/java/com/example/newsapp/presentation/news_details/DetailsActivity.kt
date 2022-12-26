@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -41,7 +42,6 @@ class DetailsActivity : AppCompatActivity() {
         _binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
-        invalidateOptionsMenu()
 
         ids = intent.getIntExtra("id", 0)
         newsInfo = intent.getParcelableExtra("news")!!
@@ -68,6 +68,7 @@ class DetailsActivity : AppCompatActivity() {
             R.id.turned -> {
                 item.setIcon(R.drawable.ic_turned_in)
                 saveBookMark()
+                Toast.makeText(this, "News bookmark has been saved!", Toast.LENGTH_LONG).show()
             }
 
             R.id.share -> {

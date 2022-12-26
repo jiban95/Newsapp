@@ -4,21 +4,23 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ProgressBar
+    <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/progressBar"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:rotation="180"
+        style="?android:attr/progressBarStyleLarge"
         app:layout_constraintBottom_toTopOf="@+id/tvLoading"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"/>
 
-    <ProgressBar
+    <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/mProgressBar"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        style="?android:attr/progressBarStyleLarge"
         app:layout_constraintBottom_toBottomOf="@+id/progressBar"
         app:layout_constraintEnd_toEndOf="@+id/progressBar"
         app:layout_constraintStart_toStartOf="@+id/progressBar"
@@ -28,9 +30,9 @@
         android:id="@+id/tvLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Loading.."
+        android:text="@string/loading"
         android:textSize="18sp"
-        android:textColor="@color/teal_700"
+        android:textColor="@color/teal_200"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintEnd_toEndOf="parent"

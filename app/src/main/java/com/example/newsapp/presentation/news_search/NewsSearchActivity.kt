@@ -2,6 +2,7 @@ package com.example.newsapp.presentation.news_search
 
 import android.app.SearchManager
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.provider.SearchRecentSuggestions
 import android.view.Menu
@@ -10,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.newsapp.R
@@ -24,13 +26,24 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class NewsSearchActivity : AppCompatActivity(), NewsVerticalListAdapter.NewsClickListener {
     private val newsSearchViewModel: NewsSearchViewModel by viewModels()
-
     private lateinit var binding: ActivityNewsSearchBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewsSearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
+        binding.toolbar.overflowIcon?.setTint(Color.WHITE)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        binding.toolbar.navigationIcon = ContextCompat.getDrawable(
+            this,
+            R.drawable.ic_back
+        )
+
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+
         binding.mNewsRecycler.layoutManager = GridLayoutManager(this, 2)
 
         // Verify the action and get the query
@@ -62,7 +75,6 @@ class NewsSearchActivity : AppCompatActivity(), NewsVerticalListAdapter.NewsClic
                     }
 
                     if (it.error.isNotEmpty()) {
-
                         binding.mNewsRecycler.visibility = View.INVISIBLE
                         binding.imgNoRecord.visibility = View.VISIBLE
                         binding.tvNoDataFound.visibility = View.VISIBLE
@@ -78,7 +90,10 @@ class NewsSearchActivity : AppCompatActivity(), NewsVerticalListAdapter.NewsClic
                             binding.imgNoRecord.visibility = View.INVISIBLE
                             binding.tvNoDataFound.visibility = View.INVISIBLE
                             binding.mNewsRecycler.visibility = View.VISIBLE
-                        }else{
+                            dialog.dismiss()
+                        } else {
+                            binding.imgNoRecord.visibility = View.VISIBLE
+                            binding.tvNoDataFound.visibility = View.VISIBLE
                             dialog.dismiss()
                         }
                     }

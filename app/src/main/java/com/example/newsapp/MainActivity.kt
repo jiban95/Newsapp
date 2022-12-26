@@ -2,7 +2,11 @@ package com.example.newsapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import com.example.newsapp.databinding.ActivityMainBinding
 import com.example.newsapp.presentation.news_bookmark.NewsBookmarkListFragment
@@ -12,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +46,8 @@ class MainActivity : AppCompatActivity() {
 
             loadFragment(fragment)
         }
+
+
     }
 
     private fun loadFragment(fragment: Fragment?): Boolean {
@@ -51,5 +58,15 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
         return true
+    }
+
+    override fun onBackPressed() {
+         supportFragmentManager
+        val fm = supportFragmentManager
+        if (fm.backStackEntryCount > 0) {
+            fm.popBackStack()
+        } else {
+            super.onBackPressed()
+        }
     }
 }

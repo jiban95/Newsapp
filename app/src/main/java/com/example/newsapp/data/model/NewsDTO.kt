@@ -1,7 +1,6 @@
 package com.example.newsapp.data.model
 
 import com.example.newsapp.domain.model.News
-import com.example.newsapp.domain.model.NewsDetails
 
 data class NewsDTO(
     val author: String?,
@@ -22,17 +21,5 @@ fun NewsDTO.toDomainNews(): News {
         description = this.description ?: "",
         url = this.url ?: "",
         content = this.content ?: ""
-    )
-}
-
-fun NewsDTO.toDomainNewsDetails(): NewsDetails {
-    return NewsDetails(
-        author = this.author ?: "",
-        content = this.content ?: "",
-        description = this.description ?: "",
-        publishedAt = this.publishedAt ?: "",
-        title = this.title ?: "",
-        url = this.url ?: "",
-        urlToImage = this.urlToImage ?: ""
     )
 }
