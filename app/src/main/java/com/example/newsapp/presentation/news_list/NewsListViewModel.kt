@@ -65,5 +65,4 @@ class NewsListViewModel @Inject constructor(private val newsListUseCase: NewsLis
             }
         }.launchIn(viewModelScope)
     }
-
 }

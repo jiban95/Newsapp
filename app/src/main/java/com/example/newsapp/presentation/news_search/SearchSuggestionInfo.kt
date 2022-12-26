@@ -2,6 +2,9 @@ package com.example.newsapp.presentation.news_search
 
 import android.content.SearchRecentSuggestionsProvider
 
+/**
+ * Class to provide search suggestion info
+ */
 class SearchSuggestionInfo : SearchRecentSuggestionsProvider() {
     init {
         setupSuggestions(AUTHORITY, MODE)

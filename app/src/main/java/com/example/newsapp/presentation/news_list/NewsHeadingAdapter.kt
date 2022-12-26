@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
 import com.example.newsapp.domain.model.News
 
+/**
+ * Adapter class to show news card vertically
+ */
 class NewsHeadingAdapter(private val list: List<News>) :
     RecyclerView.Adapter<NewsHeadingAdapter.ViewHolder>() {
 

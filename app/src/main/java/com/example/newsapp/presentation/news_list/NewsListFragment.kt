@@ -19,6 +19,9 @@ import com.example.newsapp.presentation.news_details.DetailsActivity
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Fragment class to show news vertically and horizontally
+ */
 @AndroidEntryPoint
 class NewsListFragment : Fragment(), NewsVerticalListAdapter.NewsClickListener {
     private val newsListViewModel: NewsListViewModel by viewModels()

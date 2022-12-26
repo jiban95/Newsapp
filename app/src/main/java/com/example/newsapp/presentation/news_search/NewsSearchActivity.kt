@@ -63,6 +63,9 @@ class NewsSearchActivity : AppCompatActivity(), NewsVerticalListAdapter.NewsClic
         }
     }
 
+    /**
+     * Method to search news from search api
+     */
     private fun getSearchData(searchQuery: String) {
         val dialog = LoadingDialog()
         if (CommonFile.isOnline(this)) {

@@ -2,11 +2,7 @@ package com.example.newsapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import com.example.newsapp.databinding.ActivityMainBinding
 import com.example.newsapp.presentation.news_bookmark.NewsBookmarkListFragment
@@ -46,10 +42,11 @@ class MainActivity : AppCompatActivity() {
 
             loadFragment(fragment)
         }
-
-
     }
 
+    /**
+     * Method to load fragment
+     */
     private fun loadFragment(fragment: Fragment?): Boolean {
         fragment?.let {
             supportFragmentManager
@@ -61,7 +58,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-         supportFragmentManager
+        supportFragmentManager
         val fm = supportFragmentManager
         if (fm.backStackEntryCount > 0) {
             fm.popBackStack()
