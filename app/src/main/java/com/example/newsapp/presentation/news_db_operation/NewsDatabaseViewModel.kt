@@ -13,18 +13,27 @@ import javax.inject.Inject
 @HiltViewModel
 class NewsDatabaseViewModel @Inject constructor(private val newsDbUseCase: NewsDbUseCase) :
     ViewModel() {
+    /**
+     * method to insert bookmark news into room db
+     */
     fun insertNewsData(newsBookMark: NewsBookMark) {
         viewModelScope.launch(Dispatchers.IO) {
             newsDbUseCase.insertNewsData(newsBookMark)
         }
     }
 
+    /**
+     * method to delete bookmark news from room db
+     */
     fun deleteNewsBookMark() {
         viewModelScope.launch(Dispatchers.IO) {
             newsDbUseCase.deleteNewsBookMark()
         }
     }
 
+    /**
+     * method to get all the bookmark news from room db
+     */
     suspend fun getNewsBookMark(): List<NewsBookMark> = withContext(Dispatchers.IO) {
         return@withContext newsDbUseCase.getNewsBookMark()
     }

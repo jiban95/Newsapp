@@ -1,6 +1,5 @@
 package com.example.newsapp.data.model.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.newsapp.domain.model.NewsBookMark
 
@@ -19,6 +18,6 @@ interface NewsDao {
     fun deleteAllNews()
 
     @Query("SELECT * FROM newData")
-    fun getNewsBookMark():List<NewsBookMark>
+    fun getNewsBookMark(): List<NewsBookMark>
 
 }

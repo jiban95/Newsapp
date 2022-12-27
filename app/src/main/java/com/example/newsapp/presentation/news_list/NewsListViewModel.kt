@@ -18,6 +18,9 @@ class NewsListViewModel @Inject constructor(private val newsListUseCase: NewsLis
     private val _newsList = MutableStateFlow(NewsListState())
     val newsList: StateFlow<NewsListState> = _newsList
 
+    /**
+     * method to get all news from news api
+     */
     fun getNewsData(newsType: Int) {
         newsListUseCase(newsType).onEach {
             when (it) {
@@ -34,6 +37,9 @@ class NewsListViewModel @Inject constructor(private val newsListUseCase: NewsLis
         }.launchIn(viewModelScope)
     }
 
+    /**
+     * method to get all events data from events api
+     */
     fun getEventData(newsType: Int) {
         newsListUseCase(newsType).onEach {
             when (it) {
@@ -50,6 +56,9 @@ class NewsListViewModel @Inject constructor(private val newsListUseCase: NewsLis
         }.launchIn(viewModelScope)
     }
 
+    /**
+     * method to get all weather from weather api
+     */
     fun getWeatherData(newsType: Int) {
         newsListUseCase(newsType).onEach {
             when (it) {

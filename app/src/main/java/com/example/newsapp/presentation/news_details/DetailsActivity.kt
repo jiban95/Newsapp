@@ -13,6 +13,7 @@ import androidx.lifecycle.coroutineScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.newsapp.R
+import com.example.newsapp.common.Constants
 import com.example.newsapp.databinding.ActivityDetailsBinding
 import com.example.newsapp.domain.model.News
 import com.example.newsapp.domain.model.NewsBookMark
@@ -43,8 +44,8 @@ class DetailsActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        ids = intent.getIntExtra("id", 0)
-        newsInfo = intent.getParcelableExtra("news")!!
+        ids = intent.getIntExtra("id", 0) // Getting news id form News listFragment
+        newsInfo = intent.getParcelableExtra("news")!! // Getting news data form News listFragment
 
         with(newsInfo) {
             _binding.tvTitle.text = title
@@ -68,7 +69,7 @@ class DetailsActivity : AppCompatActivity() {
             R.id.turned -> {
                 item.setIcon(R.drawable.ic_turned_in)
                 saveBookMark()
-                Toast.makeText(this, "News bookmark has been saved!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, Constants.NEWS_SAVE_MSG, Toast.LENGTH_LONG).show()
             }
 
             R.id.share -> {
@@ -87,6 +88,9 @@ class DetailsActivity : AppCompatActivity() {
         finish()
     }
 
+    /**
+     * method to save news bookmark data into room db
+     */
     private fun saveBookMark() {
         lifecycle.coroutineScope.launchWhenCreated {
             val newsData = NewsBookMark()

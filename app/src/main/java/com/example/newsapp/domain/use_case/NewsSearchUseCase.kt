@@ -12,6 +12,9 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
+/**
+ * NewsSearchUseCase class for searching news data from api
+ */
 class NewsSearchUseCase @Inject constructor(private val newsSearchRepository: NewsSearchRepository) {
     lateinit var data: NewsListDTO
     operator fun invoke(query: String): Flow<Resource<List<News>>> = flow {

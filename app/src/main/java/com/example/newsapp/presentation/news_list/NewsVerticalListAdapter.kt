@@ -26,7 +26,7 @@ class NewsVerticalListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val newsModel = list[position]
-        // sets the text to the textview from our itemHolder class
+        // sets the data to the view from our itemHolder class
 
         val options =
             RequestOptions.placeholderOf(R.drawable.placeholder).error(R.drawable.placeholder)

@@ -18,6 +18,9 @@ class NewsSearchViewModel @Inject constructor(private val newsSearchUseCase: New
     private val _newsList = MutableStateFlow(NewsListState())
     val newsList: StateFlow<NewsListState> = _newsList
 
+    /**
+     * method to get news data from api by giving search query input
+     */
     fun getNewsSearchData(query: String) {
         newsSearchUseCase(query).onEach {
             when (it) {

@@ -4,7 +4,10 @@ import android.app.Activity
 import androidx.appcompat.app.AlertDialog
 import com.example.newsapp.R
 
-class LoadingDialog() {
+/**
+ * Class for custom loading
+ */
+class LoadingDialog {
     private lateinit var dialog: AlertDialog
 
     fun startLoading(activity: Activity) {

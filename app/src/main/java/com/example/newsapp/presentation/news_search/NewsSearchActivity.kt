@@ -46,7 +46,7 @@ class NewsSearchActivity : AppCompatActivity(), NewsVerticalListAdapter.NewsClic
 
         binding.mNewsRecycler.layoutManager = GridLayoutManager(this, 2)
 
-        // Verify the action and get the query
+        // Verify the action and get the search query
         if (Intent.ACTION_SEARCH == intent.action) {
             val searchQuery = intent.getStringExtra(SearchManager.QUERY)
             getSearchData(searchQuery!!) // calling search api according to input

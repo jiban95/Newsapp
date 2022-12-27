@@ -19,7 +19,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-
 @InstallIn(SingletonComponent::class)
 @Module
 object HiltModule {
@@ -33,7 +32,7 @@ object HiltModule {
             .create(NewsApiInterface::class.java)
     }
 
-    @Singleton // Tell Dagger-Hilt to create a singleton accessible everywhere in ApplicationCompenent (i.e. everywhere in the application)
+    @Singleton // Tell Dagger-Hilt to create a singleton accessible everywhere in ApplicationComponent (i.e. everywhere in the application)
     @Provides
     fun provideYourDatabase(
         @ApplicationContext app: Context
@@ -41,7 +40,7 @@ object HiltModule {
         app,
         NewsAppDatabase::class.java,
         "news_app"
-    ).build() // The reason we can construct a database for the repo
+    ).build() // Constructing Database class
 
     @Provides
     @Singleton

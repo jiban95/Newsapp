@@ -24,12 +24,11 @@ class NewsHeadingAdapter(private val list: List<News>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val ItemsViewModel = list[position]
-        // sets the text to the textview from our itemHolder class
+        // sets the data to the textview from our itemHolder class
         holder.tvHeading.text = ItemsViewModel.title
         holder.tvDateTime.text = ItemsViewModel.publishedAt
     }
 
-    // return the number of the items in the list
     override fun getItemCount(): Int {
         return list.size
     }

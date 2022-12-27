@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.common.AppCommon.CommonFile
 import com.example.newsapp.common.AppCommon.LoadingDialog
+import com.example.newsapp.common.Constants
 import com.example.newsapp.databinding.FragmentNewsListBinding
 import com.example.newsapp.domain.model.News
 import com.example.newsapp.presentation.news_details.DetailsActivity
@@ -41,13 +42,13 @@ class NewsListFragment : Fragment(), NewsVerticalListAdapter.NewsClickListener {
         _binding!!.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
-                    0 -> {
+                    Constants.TAB_NEWS -> {
                         callNewsData()
                     }
-                    1 -> {
+                    Constants.TAB_EVENT -> {
                         callEventsData()
                     }
-                    2 -> {
+                    Constants.TAB_WEATHER -> {
                         callWeatherData()
                     }
                 }
@@ -118,7 +119,7 @@ class NewsListFragment : Fragment(), NewsVerticalListAdapter.NewsClickListener {
             _binding!!.layoutContainer.visibility = View.INVISIBLE
             _binding!!.imgNoRecord.visibility = View.VISIBLE
             _binding!!.tvNoDataFound.visibility = View.VISIBLE
-            Toast.makeText(context, "No internet available", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, Constants.NO_INTERNET, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -162,7 +163,7 @@ class NewsListFragment : Fragment(), NewsVerticalListAdapter.NewsClickListener {
             _binding!!.layoutContainer.visibility = View.INVISIBLE
             _binding!!.imgNoRecord.visibility = View.VISIBLE
             _binding!!.tvNoDataFound.visibility = View.VISIBLE
-            Toast.makeText(context, "No internet available", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, Constants.NO_INTERNET, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -205,7 +206,7 @@ class NewsListFragment : Fragment(), NewsVerticalListAdapter.NewsClickListener {
             _binding!!.layoutContainer.visibility = View.INVISIBLE
             _binding!!.imgNoRecord.visibility = View.VISIBLE
             _binding!!.tvNoDataFound.visibility = View.VISIBLE
-            Toast.makeText(context, "No internet available", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, Constants.NO_INTERNET, Toast.LENGTH_LONG).show()
         }
     }
 }

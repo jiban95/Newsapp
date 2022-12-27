@@ -16,6 +16,9 @@ import com.example.newsapp.databinding.FragmentNewsbookmarkListBinding
 import com.example.newsapp.presentation.news_db_operation.NewsDatabaseViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Fragment class to show news bookmark from room database
+ */
 @AndroidEntryPoint
 class NewsBookmarkListFragment : Fragment() {
     private val newsDatabaseViewModel: NewsDatabaseViewModel by viewModels()
@@ -41,7 +44,7 @@ class NewsBookmarkListFragment : Fragment() {
 
         lifecycle.coroutineScope.launchWhenCreated {
 
-            val newsBookmarkData = newsDatabaseViewModel.getNewsBookMark()
+            val newsBookmarkData = newsDatabaseViewModel.getNewsBookMark() // method to get news bookmark from NewsDatabaseViewModel
             if (newsBookmarkData.isNotEmpty()) {
                 val newsBookmarkAdapter = NewsBookmarkAdapter(newsBookmarkData)
                 _binding!!.newsRecycler.adapter = newsBookmarkAdapter

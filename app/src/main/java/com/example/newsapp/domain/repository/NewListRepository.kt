@@ -8,5 +8,4 @@ interface NewListRepository {
     suspend fun getEventList(): NewsListDTO
 
     suspend fun getWeatherList(): NewsListDTO
-
 }

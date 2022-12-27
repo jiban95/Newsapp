@@ -12,6 +12,9 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
+/**
+ * NewsListUseCase class to get  news, events and weather data from api
+ */
 class NewsListUseCase @Inject constructor(private val newListRepository: NewListRepository) {
     lateinit var data: NewsListDTO
     operator fun invoke(newsType: Int): Flow<Resource<List<News>>> = flow {
@@ -27,7 +30,6 @@ class NewsListUseCase @Inject constructor(private val newListRepository: NewList
                 3 -> {
                     data = newListRepository.getWeatherList()
                 }
-
             }
             val domain = data.articles.map { it.toDomainNews() }
             emit(Resource.Success(data = domain))
