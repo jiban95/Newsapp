@@ -20,5 +20,4 @@ interface NewsApiInterface {
     @GET("top-headlines")
     suspend fun getSearchDataList(@Query("q")q: String,@Query("apiKey")apiKey:String): NewsListDTO
 
-
 }

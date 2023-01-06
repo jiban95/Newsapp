@@ -69,7 +69,6 @@ class DetailsActivity : AppCompatActivity() {
             R.id.turned -> {
                 item.setIcon(R.drawable.ic_turned_in)
                 saveBookMark()
-                Toast.makeText(this, Constants.NEWS_SAVE_MSG, Toast.LENGTH_LONG).show()
             }
 
             R.id.share -> {
@@ -93,17 +92,23 @@ class DetailsActivity : AppCompatActivity() {
      */
     private fun saveBookMark() {
         lifecycle.coroutineScope.launchWhenCreated {
-            val newsData = NewsBookMark()
-            with(newsInfo) {
-                newsData.id = ids!!
-                newsData.title = title
-                newsData.description = description
-                newsData.url = url
-                newsData.urlToImage = urlToImage
-                newsData.publishedAt = publishedAt
-                newsData.content = content
+            if (newsDatabaseViewModel.getNewsBookMarkCount(ids) > 0) {
+                Toast.makeText(this@DetailsActivity, "Bookmark already saved!", Toast.LENGTH_LONG)
+                    .show()
+            } else {
+                val newsData = NewsBookMark()
+                with(newsInfo) {
+                    newsData.id = ids!!
+                    newsData.title = title
+                    newsData.description = description
+                    newsData.url = url
+                    newsData.urlToImage = urlToImage
+                    newsData.publishedAt = publishedAt
+                    newsData.content = content
+                }
+                newsDatabaseViewModel.insertNewsData(newsData)
+                Toast.makeText(this@DetailsActivity, Constants.NEWS_SAVE_MSG, Toast.LENGTH_LONG).show()
             }
-            newsDatabaseViewModel.insertNewsData(newsData)
         }
     }
 }

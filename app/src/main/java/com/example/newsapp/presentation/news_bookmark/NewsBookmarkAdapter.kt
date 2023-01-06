@@ -9,9 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.newsapp.R
+import com.example.newsapp.domain.model.News
 import com.example.newsapp.domain.model.NewsBookMark
 
-class NewsBookmarkAdapter(private val newsBookmarkList: List<NewsBookMark>) :
+class NewsBookmarkAdapter(
+    private val newsBookmarkList: List<NewsBookMark>,
+    private val listener: NewsClickListener
+) :
     RecyclerView.Adapter<NewsBookmarkAdapter.ViewHolder>() {
 
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
@@ -32,10 +36,20 @@ class NewsBookmarkAdapter(private val newsBookmarkList: List<NewsBookMark>) :
             Glide.with(holder.image).setDefaultRequestOptions(options)
                 .load(urlToImage).into(holder.image)
             holder.tvHeading.text = title
+            holder.image.setOnClickListener {
+                listener.onNewsItemClick(
+                    id,
+                    News(title, publishedAt, urlToImage, description, url, content)
+                )
+            }
         }
     }
 
     override fun getItemCount(): Int {
         return newsBookmarkList.size
+    }
+
+    interface NewsClickListener {
+        fun onNewsItemClick(id: Int, itemsViewModel: News)
     }
 }

@@ -13,12 +13,11 @@ class NewsDbUseCase @Inject constructor(private val newsDatabaseRepo: NewsDataRe
         newsDatabaseRepo.insertNewsData(newsBookMark)
     }
 
-    fun deleteNewsBookMark() {
-        newsDatabaseRepo.deleteNewsBookMark()
+    fun getNewsBookMarkCount(ids: Int?): Int {
+        return newsDatabaseRepo.getNewsBookMarkCount(ids)
     }
 
     fun getNewsBookMark(): List<NewsBookMark> {
         return newsDatabaseRepo.getNewsBookMark()
     }
-
 }

@@ -23,12 +23,10 @@ class NewsDatabaseViewModel @Inject constructor(private val newsDbUseCase: NewsD
     }
 
     /**
-     * method to delete bookmark news from room db
+     * method to getDataCount bookmark news from room db
      */
-    fun deleteNewsBookMark() {
-        viewModelScope.launch(Dispatchers.IO) {
-            newsDbUseCase.deleteNewsBookMark()
-        }
+    suspend fun getNewsBookMarkCount(ids: Int?): Int = withContext(Dispatchers.IO) {
+        return@withContext newsDbUseCase.getNewsBookMarkCount(ids)
     }
 
     /**

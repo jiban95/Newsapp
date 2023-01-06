@@ -17,6 +17,9 @@ interface NewsDao {
     @Query("DELETE FROM newData")
     fun deleteAllNews()
 
+    @Query("SELECT COUNT(*) FROM newData WHERE id=:ids")
+    fun getNewsBookMarkCount(ids: Int?): Int
+
     @Query("SELECT * FROM newData")
     fun getNewsBookMark(): List<NewsBookMark>
 
